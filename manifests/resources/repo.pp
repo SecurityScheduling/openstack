@@ -3,7 +3,7 @@ class openstack::resources::repo {
 
     package { 'ubuntu-cloud-keyring':
         ensure => present,
-    }
+    } ->
 
     apt::source { 'cloudarchive-kilo':
         location  => 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
