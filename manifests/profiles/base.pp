@@ -3,4 +3,7 @@ class openstack::profiles::base {
 
     #need NTP installed on all nodes
     include '::ntp'
+
+    #all nodes need the openstack kilo repository installed
+    include '::openstack::resources::repo'
 }
