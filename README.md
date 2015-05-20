@@ -1,6 +1,7 @@
 # security scheduling - Openstack Kilo
 
-This module installs openstack kile in a multi-node environment
+This module installs openstack kilo in a multi-node environment
+
 
 ## Install
 
