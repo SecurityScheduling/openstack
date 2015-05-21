@@ -193,12 +193,5 @@ Puppet::Type.type(:keystone_endpoint).provide(:openstack) do
         @instance ||= instances.select { |instance| instance[:name] == name }.first || {}
     end
 
-    def flush
-        if ! @property_flush.empty?
-            destroy
-            create
-            @property_flush.clear
-        end
-    end
 
 end

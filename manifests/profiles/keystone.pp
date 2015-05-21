@@ -1,9 +1,8 @@
-class openstack::profiles::keystone {
-
-    # parameters
-    $admin_token = '3aba4db72e9f2e1ca877'
-    $keystone_db_pass = 'ABCabc123##'
-    $keystone_server = 'controller-dev'
+class openstack::profiles::keystone (
+    $admin_token = hiera(openstack::admin_token),
+    $keystone_db_pass = hiera(openstack::keystone_db_pass),
+    $keystone_server = hiera(openstack::keystone_server),
+) {
 
     # load the keystone packages
     $keystone_packages = ['keystone','python-openstackclient','apache2','libapache2-mod-wsgi','memcached','python-memcache','python-mysqldb']
@@ -53,13 +52,13 @@ class openstack::profiles::keystone {
         privileges => ['ALL'],
     } ->
 
-    mysql_user{ 'keystone@controlloer-dev':
+    mysql_user{ "keystone@${keystone_server}":
         ensure        => present,
         password_hash => mysql_password('ABCabc123##'),
     } ->
 
-    mysql_grant { 'keystone@controller-dev/keystone.*':
-        user       => 'keystone@controller-dev',
+    mysql_grant { "keystone@${keystone_server}/keystone.*":
+        user       => "keystone@${keystone_server}",
         table      => 'keystone.*',
         privileges => ['ALL'],
     } ->
@@ -144,14 +143,26 @@ class openstack::profiles::keystone {
 
     keystone_endpoint { 'RegionOne/keystone':
         ensure       => present,
-        public_url   => 'http://controller-dev:5000/v2.0',
-        internal_url => 'http://controller-dev:5000/v2.0',
-        admin_url    => 'http://controller-dev:35357/v2.0',
+        public_url   => "http://${keystone_server}:5000/v2.0",
+        internal_url => "http://${keystone_server}:5000/v2.0",
+        admin_url    => "http://${keystone_server}:35357/v2.0",
     }
 
     keystone_project { 'admin':
         ensure      => present,
         description => 'Admin Project',
+        enabled     => 'true',
+    }
+
+    keystone_project { 'service':
+        ensure      => present,
+        description => 'Service Project',
+        enabled     => 'true',
+    }
+
+    keystone_project { 'demo':
+        ensure      => present,
+        description => 'Demo Project',
         enabled     => 'true',
     }
 
