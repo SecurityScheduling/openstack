@@ -142,4 +142,17 @@ class openstack::profiles::keystone {
         type        => 'identity',
     }
 
+    keystone_endpoint { 'RegionOne/keystone':
+        ensure       => present,
+        public_url   => 'http://controller-dev:5000/v2.0',
+        internal_url => 'http://controller-dev:5000/v2.0',
+        admin_url    => 'http://controller-dev:35357/v2.0',
+    }
+
+    keystone_project { 'admin':
+        ensure      => present,
+        description => 'Admin Project',
+        enabled     => 'true',
+    }
+
 }
