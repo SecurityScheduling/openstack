@@ -166,4 +166,15 @@ class openstack::profiles::keystone (
         enabled     => 'true',
     }
 
+    keystone_user { 'admin':
+        ensure   => present,
+        email    => 'trpsbill@gmail.com',
+        password => 'p@ssw0rd',
+    }
+
+    keystone_user { 'demo':
+        ensure   => present,
+        email    => 'trpsbill@gmail.com',
+        password => 'p@ssw0rd',
+    }
 }

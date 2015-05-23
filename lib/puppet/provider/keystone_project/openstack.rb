@@ -1,5 +1,5 @@
 require 'csv'
-require 'puppet/util/inifile'
+require 'puppet/provider/keystone'
 Puppet::Type.type(:keystone_project).provide(
     :openstack,
     :parent => Puppet::Provider::Keystone

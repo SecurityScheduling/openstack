@@ -1,3 +1,4 @@
+File.expand_path('../..', File.dirname(__FILE__)).tap { |dir| $LOAD_PATH.unshift(dir) unless $LOAD_PATH.include?(dir) }
 require 'uri'
 Puppet::Type.newtype(:keystone_endpoint) do
 
